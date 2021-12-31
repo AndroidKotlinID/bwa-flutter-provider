@@ -1,6 +1,6 @@
-# bwanoteprovider
+# BWA Note Provider
 
-A new Flutter project.
+Latihan menggunakan state management Provider di Flutter. Latihan dari [BWA Flutter](https://buildwithangga.com/tips/flutter-tutorial-simple-notes-app-using-provider)
 
 ## Getting Started
 

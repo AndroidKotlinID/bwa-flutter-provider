@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:bwanoteprovider/models/notedata.dart';
 
-class NoteOperation with ChangeNotifier {
+class NotesOperation with ChangeNotifier {
   final List<Note> _notes = [];
 
   List<Note> get getNotes {
     return _notes;
   }
 
-  NoteOperation(String title, String description) {
+  NotesOperation(String title, String description) {
     addNewNote('First note', 'First note description');
   }
 
