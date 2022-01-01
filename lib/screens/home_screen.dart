@@ -10,17 +10,20 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Note Homescreen',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        colorScheme: ColorScheme.fromSwatch().copyWith(
-          primary: blueColor,
-          secondary: Colors.orange,
+    return ChangeNotifierProvider<NotesOperation>(
+      create: (context) => NotesOperation(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Note Homescreen',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          colorScheme: ColorScheme.fromSwatch().copyWith(
+            primary: blueColor,
+            secondary: Colors.orange,
+          ),
         ),
+        home: const Homepage(),
       ),
-      home: const Homepage(),
     );
   }
 }

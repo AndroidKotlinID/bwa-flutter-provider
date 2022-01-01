@@ -8,7 +8,7 @@ class NotesOperation with ChangeNotifier {
     return _notes;
   }
 
-  NotesOperation(String title, String description) {
+  NotesOperation({String title = '', String description = ''}) {
     addNewNote('First note', 'First note description');
   }
 

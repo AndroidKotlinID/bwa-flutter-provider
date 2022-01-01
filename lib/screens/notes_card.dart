@@ -14,7 +14,7 @@ class NotesCard extends StatelessWidget {
       padding: const EdgeInsets.all(15),
       height: 150,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: const Color(0xfff2f2f2),
         borderRadius: BorderRadius.circular(15),
       ),
       child: Column(
@@ -25,6 +25,7 @@ class NotesCard extends StatelessWidget {
             style: GoogleFonts.lato(
               fontSize: 20,
               fontWeight: FontWeight.bold,
+              color: Colors.black,
             ),
           ),
           const SizedBox(
@@ -35,6 +36,7 @@ class NotesCard extends StatelessWidget {
             style: GoogleFonts.lato(
               fontSize: 16,
               fontWeight: FontWeight.normal,
+              color: Colors.black,
             ),
           ),
         ],
