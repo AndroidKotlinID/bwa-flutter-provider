@@ -15,7 +15,7 @@ class _AddScreenPageState extends State<AddScreenPage> {
   String titleText = '';
   String descriptionText = '';
 
-  String titlePage = '';
+  String titlePage = 'Add New Note';
   bool isVisibleSubtitle = false;
 
 // Simpan data Note ke dalam Provider state management
@@ -116,6 +116,8 @@ class _AddScreenPageState extends State<AddScreenPage> {
                           keyboardType: TextInputType.text,
                           maxLength: 32,
                         ),
+                        // Mode autofill
+                        // https://medium.com/swlh/how-to-implement-autofill-in-your-flutter-app-b43bddab1a97
                         TextFormField(
                           decoration: InputDecoration(
                             border: InputBorder.none,
@@ -151,7 +153,11 @@ class _AddScreenPageState extends State<AddScreenPage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  // Simpan note ke dalam state
+                  saveNoteData(context,
+                      title: titleText, descNote: descriptionText);
+                },
                 child: Text(
                   'Add Note',
                   style: GoogleFonts.lato(

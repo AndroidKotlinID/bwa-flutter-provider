@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:bwanoteprovider/screens/home_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  // runApp(const MyApp());
+  runApp(const HomeScreen());
 }
 
 class MyApp extends StatelessWidget {

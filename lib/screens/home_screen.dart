@@ -1,3 +1,4 @@
+import 'package:bwanoteprovider/screens/addnote_screen.dart';
 import 'package:bwanoteprovider/screens/notes_card.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -85,6 +86,12 @@ class _HomepageState extends State<Homepage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // Navigasi ke halaman yang lain
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const AddScreenPage(),
+            ),
+          );
         },
         child: const Icon(
           Icons.add,
