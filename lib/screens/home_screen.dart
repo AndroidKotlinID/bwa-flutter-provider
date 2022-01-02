@@ -38,7 +38,7 @@ class Homepage extends StatefulWidget {
 
 class _HomepageState extends State<Homepage> {
   String titleHomepage = 'Daftar Catatan';
-  String subtitleHomepage = 'BWA Notes';
+  String subtitleHomepage = 'Note Taker';
   bool isVisibleSubtitle = true;
 
   @override
