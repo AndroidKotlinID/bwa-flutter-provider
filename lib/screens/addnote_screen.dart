@@ -24,6 +24,8 @@ class _AddScreenPageState extends State<AddScreenPage> {
     if (title.isNotEmpty && descNote.isNotEmpty) {
       Provider.of<NotesOperation>(context, listen: false)
           .addNewNote(title, descNote);
+
+      Navigator.pop(context);
     } else {
       // Contoh penggunaan Snackbar
       // https://stackoverflow.com/questions/65906662/showsnackbar-is-deprecated-and-shouldnt-be-used
@@ -162,8 +164,8 @@ class _AddScreenPageState extends State<AddScreenPage> {
                   'Add Note',
                   style: GoogleFonts.lato(
                     fontSize: 18,
-                    fontWeight: FontWeight.normal,
-                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
@@ -178,6 +180,9 @@ class _AddScreenPageState extends State<AddScreenPage> {
                 ),
               ),
             ),
+            const SizedBox(
+              height: 18,
+            )
           ],
         ),
       ),
