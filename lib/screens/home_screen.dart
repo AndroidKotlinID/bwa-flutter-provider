@@ -1,5 +1,6 @@
 import 'package:bwanoteprovider/screens/addnote_screen.dart';
 import 'package:bwanoteprovider/screens/notes_card.dart';
+import 'package:bwanoteprovider/screens/singlenote_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:bwanoteprovider/themedata.dart';
@@ -40,6 +41,15 @@ class _HomepageState extends State<Homepage> {
   String titleHomepage = 'Daftar Catatan';
   String subtitleHomepage = 'Note Taker';
   bool isVisibleSubtitle = true;
+
+  void navigasiSingleNotePage(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const SingleNoteScreen(),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {

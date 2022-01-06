@@ -1,3 +1,4 @@
+import 'package:bwanoteprovider/models/singlenotedata.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,9 +20,10 @@ class _SingleNoteScreenState extends State<SingleNoteScreen>
   String descriptionText = '';
   bool isVisibleSubtitle = true;
 
-  void saveNoteData() {}
+  void saveNoteData(BuildContext context,
+      {stringTitle = '', stringDesc = ''}) {}
 
-  void getNoteData() {}
+  void getNoteData(BuildContext context) {}
 
   Widget formCreate() {
     return Expanded(
@@ -39,6 +41,7 @@ class _SingleNoteScreenState extends State<SingleNoteScreen>
               children: [
                 // Mode autofill
                 // https://medium.com/swlh/how-to-implement-autofill-in-your-flutter-app-b43bddab1a97
+                // https://stackoverflow.com/questions/50334268/flutter-changing-the-border-color-of-the-outlineinputborder
                 TextFormField(
                   decoration: InputDecoration(
                     hintText: 'Enter message here',
@@ -73,6 +76,9 @@ class _SingleNoteScreenState extends State<SingleNoteScreen>
                   ),
                   onChanged: (value) {
                     descriptionText = value;
+                  },
+                  onEditingComplete: () {
+                    // cek jika editor selesai dimasukkan
                   },
                   validator: (value) {
                     if (value != null && value.isEmpty) {
@@ -121,6 +127,8 @@ class _SingleNoteScreenState extends State<SingleNoteScreen>
     );
   }
 
+// Memantau lifecycle flutter
+// https://api.flutter.dev/flutter/widgets/WidgetsBindingObserver-class.html
   @override
   void initState() {
     super.initState();
@@ -192,6 +200,7 @@ class _SingleNoteScreenState extends State<SingleNoteScreen>
           children: [
             formCreate(),
             buttonSaved(),
+            Text('Last state saved notification $_lastLifecycleState'),
             const SizedBox(),
           ],
         ),
