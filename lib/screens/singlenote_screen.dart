@@ -1,4 +1,4 @@
-import 'package:bwanoteprovider/models/singlenotedata.dart';
+import 'package:bwanoteprovider/models/singlenote_operation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -17,11 +17,38 @@ class _SingleNoteScreenState extends State<SingleNoteScreen>
 
   String titlePage = 'Add Single Note';
   String subtitlePage = 'Notetaking';
+  String titleText = '';
   String descriptionText = '';
   bool isVisibleSubtitle = true;
 
   void saveNoteData(BuildContext context,
-      {stringTitle = '', stringDesc = ''}) {}
+      {String stringTitle = '', String stringDesc = ''}) {
+    if (stringTitle.isNotEmpty && stringDesc.isNotEmpty) {
+      Provider.of<SingleNoteOperation>(context, listen: false)
+          .addNewNote(judulCatatan: stringTitle, isiCatatan: stringDesc);
+
+      if (Navigator.canPop(context)) {
+        Navigator.pop(context);
+      }
+    } else {
+      // Contoh penggunaan Snackbar
+      // https://stackoverflow.com/questions/65906662/showsnackbar-is-deprecated-and-shouldnt-be-used
+      // https://stackoverflow.com/questions/54955500/flutter-snackbar-dismiss-on-snackbaraction-onpressed
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text('Isi data judul dan deskripsi'),
+          backgroundColor: Colors.black,
+          duration: const Duration(seconds: 2),
+          action: SnackBarAction(
+            label: 'OK',
+            onPressed: () {
+              ScaffoldMessenger.of(context).hideCurrentSnackBar();
+            },
+          ),
+        ),
+      );
+    }
+  }
 
   void getNoteData(BuildContext context) {}
 
@@ -44,7 +71,50 @@ class _SingleNoteScreenState extends State<SingleNoteScreen>
                 // https://stackoverflow.com/questions/50334268/flutter-changing-the-border-color-of-the-outlineinputborder
                 TextFormField(
                   decoration: InputDecoration(
-                    hintText: 'Enter message here',
+                    hintText: 'Enter title',
+                    enabledBorder: const OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(4),
+                      ),
+                      borderSide: BorderSide(
+                        color: Colors.black54,
+                        width: 1.2,
+                      ),
+                    ),
+                    focusedBorder: const OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(4),
+                      ),
+                      borderSide: BorderSide(
+                        color: Colors.orange,
+                        width: 1.2,
+                      ),
+                    ),
+                    hintStyle: GoogleFonts.lato(
+                      fontSize: 18,
+                      fontWeight: FontWeight.normal,
+                      color: Colors.black,
+                    ),
+                  ),
+                  style: GoogleFonts.lato(
+                    fontSize: 18,
+                    fontWeight: FontWeight.normal,
+                    color: Colors.black,
+                  ),
+                  onChanged: (value) {
+                    titleText = value;
+                  },
+                  validator: (value) {
+                    if (value != null && value.isEmpty) {
+                      return 'Please enter description';
+                    }
+                  },
+                  keyboardType: TextInputType.text,
+                  maxLength: 140,
+                ),
+                TextFormField(
+                  decoration: InputDecoration(
+                    hintText: 'Enter description here',
                     hintStyle: GoogleFonts.lato(
                       fontSize: 18,
                       fontWeight: FontWeight.normal,
@@ -103,7 +173,10 @@ class _SingleNoteScreenState extends State<SingleNoteScreen>
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              saveNoteData(context,
+                  stringTitle: titleText, stringDesc: descriptionText);
+            },
             child: Text(
               'Simpan Note',
               style: GoogleFonts.lato(

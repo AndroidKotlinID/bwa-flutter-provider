@@ -76,7 +76,9 @@ class _HomepageState extends State<Homepage> {
         backgroundColor: blueColor,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              navigasiSingleNotePage(context);
+            },
             icon: const Icon(
               Icons.help,
               color: Colors.white,
