@@ -112,6 +112,9 @@ class _SingleNoteScreenState extends State<SingleNoteScreen>
                   keyboardType: TextInputType.text,
                   maxLength: 140,
                 ),
+                const SizedBox(
+                  height: 14,
+                ),
                 TextFormField(
                   decoration: InputDecoration(
                     hintText: 'Enter description here',
@@ -180,14 +183,14 @@ class _SingleNoteScreenState extends State<SingleNoteScreen>
             child: Text(
               'Simpan Note',
               style: GoogleFonts.lato(
-                fontSize: 18,
+                fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
             ),
             style: ElevatedButton.styleFrom(
               primary: Colors.orange.shade700,
-              padding: const EdgeInsets.symmetric(horizontal: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
                   Radius.circular(10),
