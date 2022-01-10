@@ -1,3 +1,4 @@
+import 'package:bwanoteprovider/models/singlenote_operation.dart';
 import 'package:bwanoteprovider/screens/addnote_screen.dart';
 import 'package:bwanoteprovider/screens/notes_card.dart';
 import 'package:bwanoteprovider/screens/singlenote_screen.dart';
@@ -12,21 +13,56 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<NotesOperation>(
-      create: (context) => NotesOperation(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Note Homescreen',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          colorScheme: ColorScheme.fromSwatch().copyWith(
-            primary: blueColor,
-            secondary: Colors.orange,
-          ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Note Homescreen',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+          primary: blueColor,
+          secondary: Colors.orange,
         ),
-        home: const Homepage(),
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
+      home: const Homepage(),
     );
+    // return MultiProvider(
+    //   providers: [
+    //     ChangeNotifierProvider(create: (context) => NotesOperation()),
+    //     ChangeNotifierProvider(create: (context) => SingleNoteOperation())
+    //   ],
+    //   builder: (context, child) {
+    //     return MaterialApp(
+    //       debugShowCheckedModeBanner: false,
+    //       title: 'Note Homescreen',
+    //       theme: ThemeData(
+    //         primarySwatch: Colors.blue,
+    //         colorScheme: ColorScheme.fromSwatch().copyWith(
+    //           primary: blueColor,
+    //           secondary: Colors.orange,
+    //         ),
+    //         visualDensity: VisualDensity.adaptivePlatformDensity,
+    //       ),
+    //       home: const Homepage(),
+    //     );
+    //   },
+    // );
+    // return ChangeNotifierProvider<NotesOperation>(
+    //   create: (context) => NotesOperation(),
+    //   child: MaterialApp(
+    //     debugShowCheckedModeBanner: false,
+    //     title: 'Note Homescreen',
+    //     theme: ThemeData(
+    //       primarySwatch: Colors.blue,
+    //       colorScheme: ColorScheme.fromSwatch().copyWith(
+    //         primary: blueColor,
+    //         secondary: Colors.orange,
+    //       ),
+    //       visualDensity: VisualDensity.adaptivePlatformDensity,
+    //     ),
+    //     home: const Homepage(),
+    //   ),
+    // );
   }
 }
 

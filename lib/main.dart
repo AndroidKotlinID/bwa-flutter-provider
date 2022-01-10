@@ -1,9 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:bwanoteprovider/screens/home_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:bwanoteprovider/models/singlenote_operation.dart';
+import 'package:bwanoteprovider/models/notes_operation.dart';
 
 void main() {
   // runApp(const MyApp());
-  runApp(const HomeScreen());
+  // runApp(const HomeScreen());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => NotesOperation()),
+        ChangeNotifierProvider(create: (context) => SingleNoteOperation())
+      ],
+      child: const HomeScreen(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

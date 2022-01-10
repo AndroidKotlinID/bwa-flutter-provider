@@ -25,6 +25,8 @@ class _AddScreenPageState extends State<AddScreenPage> {
       Provider.of<NotesOperation>(context, listen: false)
           .addNewNote(title, descNote);
 
+      // context.read<NotesOperation>().addNewNote(title, descNote);
+
       Navigator.pop(context);
     } else {
       // Contoh penggunaan Snackbar
@@ -97,6 +99,7 @@ class _AddScreenPageState extends State<AddScreenPage> {
                     child: Column(
                       children: [
                         TextField(
+                          textInputAction: TextInputAction.done,
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             hintText: 'Title',
@@ -114,13 +117,20 @@ class _AddScreenPageState extends State<AddScreenPage> {
                           onChanged: (value) {
                             titleText = value;
                           },
-                          onEditingComplete: () {},
+                          onEditingComplete: () {
+                            // https://stackoverflow.com/questions/44991968/how-can-i-dismiss-the-on-screen-keyboard
+                            // https://flutterigniter.com/dismiss-keyboard-form-lose-focus/
+                            if (FocusScope.of(context).hasPrimaryFocus) {
+                              FocusScope.of(context).unfocus();
+                            }
+                          },
                           keyboardType: TextInputType.text,
                           maxLength: 32,
                         ),
                         // Mode autofill
                         // https://medium.com/swlh/how-to-implement-autofill-in-your-flutter-app-b43bddab1a97
                         TextFormField(
+                          textInputAction: TextInputAction.done,
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             hintText: 'Enter description',

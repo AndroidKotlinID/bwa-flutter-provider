@@ -1,6 +1,6 @@
 import 'package:bwanoteprovider/models/singlenote_operation.dart';
+import 'package:bwanoteprovider/models/singlenotedata.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -21,10 +21,23 @@ class _SingleNoteScreenState extends State<SingleNoteScreen>
   String descriptionText = '';
   bool isVisibleSubtitle = true;
 
+// Mengambil nilai input dari text form field
+// https://docs.flutter.dev/cookbook/forms/retrieve-input
+  final TextEditingController _textTitleEditingController =
+      TextEditingController(text: '');
+
+  final TextEditingController _textDescEditingController =
+      TextEditingController(text: '');
+
+  SingleNote singleNoteStateSaved = SingleNote('', '');
+
   void saveNoteData(BuildContext context,
       {String stringTitle = '', String stringDesc = ''}) {
     if (stringTitle.isNotEmpty && stringDesc.isNotEmpty) {
-      Provider.of<SingleNoteOperation>(context, listen: false)
+      // Provider.of<SingleNoteOperation>(context, listen: false)
+      //     .addNewNote(judulCatatan: stringTitle, isiCatatan: stringDesc);
+      context
+          .read<SingleNoteOperation>()
           .addNewNote(judulCatatan: stringTitle, isiCatatan: stringDesc);
 
       if (Navigator.canPop(context)) {
@@ -111,6 +124,53 @@ class _SingleNoteScreenState extends State<SingleNoteScreen>
                   },
                   keyboardType: TextInputType.text,
                   maxLength: 140,
+                  controller: _textTitleEditingController,
+                  // textInputAction: TextInputAction.next,
+                ),
+                TextFormField(
+                  decoration: InputDecoration(
+                    hintText: 'Enter title',
+                    enabledBorder: const OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(4),
+                      ),
+                      borderSide: BorderSide(
+                        color: Colors.black54,
+                        width: 1.2,
+                      ),
+                    ),
+                    focusedBorder: const OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(4),
+                      ),
+                      borderSide: BorderSide(
+                        color: Colors.orange,
+                        width: 1.2,
+                      ),
+                    ),
+                    hintStyle: GoogleFonts.lato(
+                      fontSize: 18,
+                      fontWeight: FontWeight.normal,
+                      color: Colors.black,
+                    ),
+                  ),
+                  style: GoogleFonts.lato(
+                    fontSize: 18,
+                    fontWeight: FontWeight.normal,
+                    color: Colors.black,
+                  ),
+                  onChanged: (value) {
+                    titleText = value;
+                  },
+                  validator: (value) {
+                    if (value != null && value.isEmpty) {
+                      return 'Please enter description';
+                    }
+                  },
+                  keyboardType: TextInputType.text,
+                  maxLength: 140,
+                  controller: _textTitleEditingController,
+                  // textInputAction: TextInputAction.next,
                 ),
                 const SizedBox(
                   height: 14,
@@ -150,9 +210,6 @@ class _SingleNoteScreenState extends State<SingleNoteScreen>
                   onChanged: (value) {
                     descriptionText = value;
                   },
-                  onEditingComplete: () {
-                    // cek jika editor selesai dimasukkan
-                  },
                   validator: (value) {
                     if (value != null && value.isEmpty) {
                       return 'Please enter description';
@@ -160,6 +217,8 @@ class _SingleNoteScreenState extends State<SingleNoteScreen>
                   },
                   keyboardType: TextInputType.text,
                   maxLength: 140,
+                  controller: _textDescEditingController,
+                  // textInputAction: TextInputAction.done,
                 ),
               ],
             ),
@@ -177,8 +236,10 @@ class _SingleNoteScreenState extends State<SingleNoteScreen>
         children: [
           ElevatedButton(
             onPressed: () {
+              // saveNoteData(context, stringTitle: titleText, stringDesc: descriptionText);
               saveNoteData(context,
-                  stringTitle: titleText, stringDesc: descriptionText);
+                  stringTitle: _textTitleEditingController.text,
+                  stringDesc: _textDescEditingController.text);
             },
             child: Text(
               'Simpan Note',
@@ -208,20 +269,25 @@ class _SingleNoteScreenState extends State<SingleNoteScreen>
   @override
   void initState() {
     super.initState();
+
     WidgetsBinding.instance?.addObserver(this);
   }
 
   @override
   void dispose() {
     WidgetsBinding.instance?.removeObserver(this);
+    _textTitleEditingController.dispose();
+    _textDescEditingController.dispose();
     super.dispose();
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    setState(() {
-      _lastLifecycleState = state;
-    });
+    if (mounted) {
+      setState(() {
+        _lastLifecycleState = state;
+      });
+    }
     super.didChangeAppLifecycleState(state);
   }
 
@@ -233,6 +299,31 @@ class _SingleNoteScreenState extends State<SingleNoteScreen>
 
   @override
   Widget build(BuildContext context) {
+    // singleNoteStateSaved =
+    //     context.select<SingleNote, SingleNote>((singlenote) => singlenote);
+    singleNoteStateSaved =
+        Provider.of<SingleNoteOperation>(context, listen: false).getSingleNote;
+
+    String titleData = '';
+    titleData = context.select<SingleNote, String>(
+      (singlenote) {
+        if (singlenote.title.isNotEmpty) {
+          return singlenote.title;
+        } else {
+          return '';
+        }
+      },
+    );
+
+    // String deskripsiData = context
+    //     .select<SingleNote, String>((singlenote) => singlenote.description);
+    String deskripsiData = '';
+
+    _textTitleEditingController.clear();
+    _textTitleEditingController.text = titleData;
+
+    _textDescEditingController.text = deskripsiData;
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
