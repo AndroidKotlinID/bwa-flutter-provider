@@ -304,24 +304,26 @@ class _SingleNoteScreenState extends State<SingleNoteScreen>
     singleNoteStateSaved =
         Provider.of<SingleNoteOperation>(context, listen: false).getSingleNote;
 
-    String titleData = '';
-    titleData = context.select<SingleNote, String>(
-      (singlenote) {
-        if (singlenote.title.isNotEmpty) {
-          return singlenote.title;
+    String titleData = context.select<SingleNoteOperation, String>(
+      (singlenoteoperation) {
+        SingleNote singlenoteop = singlenoteoperation.getSingleNote;
+        if (singlenoteop.title.isNotEmpty) {
+          return singlenoteop.title;
         } else {
           return '';
         }
       },
     );
 
-    // String deskripsiData = context
-    //     .select<SingleNote, String>((singlenote) => singlenote.description);
-    String deskripsiData = '';
+    String deskripsiData = context.select<SingleNoteOperation, String>(
+      (singlenoteoperation) {
+        SingleNote singlenoteop = singlenoteoperation.getSingleNote;
+        return singlenoteop.description;
+      },
+    );
 
     _textTitleEditingController.clear();
     _textTitleEditingController.text = titleData;
-
     _textDescEditingController.text = deskripsiData;
 
     return Scaffold(
