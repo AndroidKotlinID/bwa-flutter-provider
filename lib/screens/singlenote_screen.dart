@@ -19,6 +19,10 @@ class _SingleNoteScreenState extends State<SingleNoteScreen>
   String subtitlePage = 'Notetaking';
   String titleText = '';
   String descriptionText = '';
+
+  String titleTextState = '';
+  String descTextState = '';
+
   bool isVisibleSubtitle = true;
 
 // Mengambil nilai input dari text form field
@@ -63,7 +67,34 @@ class _SingleNoteScreenState extends State<SingleNoteScreen>
     }
   }
 
-  void getNoteData(BuildContext context) {}
+  void getNoteData(BuildContext context) {
+    // singleNoteStateSaved =
+    //     context.select<SingleNote, SingleNote>((singlenote) => singlenote);
+    singleNoteStateSaved =
+        Provider.of<SingleNoteOperation>(context, listen: false).getSingleNote;
+
+    titleTextState = context.select<SingleNoteOperation, String>(
+      (singlenoteoperation) {
+        SingleNote singlenoteop = singlenoteoperation.getSingleNote;
+        if (singlenoteop.title.isNotEmpty) {
+          return singlenoteop.title;
+        } else {
+          return '';
+        }
+      },
+    );
+
+    descTextState = context.select<SingleNoteOperation, String>(
+      (singlenoteoperation) {
+        SingleNote singlenoteop = singlenoteoperation.getSingleNote;
+        return singlenoteop.description;
+      },
+    );
+
+    _textTitleEditingController.clear();
+    _textTitleEditingController.text = titleTextState;
+    _textDescEditingController.text = descTextState;
+  }
 
   Widget formCreate() {
     return Expanded(
@@ -125,52 +156,7 @@ class _SingleNoteScreenState extends State<SingleNoteScreen>
                   keyboardType: TextInputType.text,
                   maxLength: 140,
                   controller: _textTitleEditingController,
-                  // textInputAction: TextInputAction.next,
-                ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    hintText: 'Enter title',
-                    enabledBorder: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(4),
-                      ),
-                      borderSide: BorderSide(
-                        color: Colors.black54,
-                        width: 1.2,
-                      ),
-                    ),
-                    focusedBorder: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(4),
-                      ),
-                      borderSide: BorderSide(
-                        color: Colors.orange,
-                        width: 1.2,
-                      ),
-                    ),
-                    hintStyle: GoogleFonts.lato(
-                      fontSize: 18,
-                      fontWeight: FontWeight.normal,
-                      color: Colors.black,
-                    ),
-                  ),
-                  style: GoogleFonts.lato(
-                    fontSize: 18,
-                    fontWeight: FontWeight.normal,
-                    color: Colors.black,
-                  ),
-                  onChanged: (value) {
-                    titleText = value;
-                  },
-                  validator: (value) {
-                    if (value != null && value.isEmpty) {
-                      return 'Please enter description';
-                    }
-                  },
-                  keyboardType: TextInputType.text,
-                  maxLength: 140,
-                  controller: _textTitleEditingController,
-                  // textInputAction: TextInputAction.next,
+                  textInputAction: TextInputAction.next,
                 ),
                 const SizedBox(
                   height: 14,
@@ -209,6 +195,11 @@ class _SingleNoteScreenState extends State<SingleNoteScreen>
                   ),
                   onChanged: (value) {
                     descriptionText = value;
+                  },
+                  onEditingComplete: () {
+                    // https://stackoverflow.com/questions/51652897/how-to-hide-soft-input-keyboard-on-flutter-after-clicking-outside-textfield-anyw
+                    print('Edit text selesai dilakukan');
+                    FocusManager.instance.primaryFocus?.unfocus();
                   },
                   validator: (value) {
                     if (value != null && value.isEmpty) {
@@ -299,32 +290,8 @@ class _SingleNoteScreenState extends State<SingleNoteScreen>
 
   @override
   Widget build(BuildContext context) {
-    // singleNoteStateSaved =
-    //     context.select<SingleNote, SingleNote>((singlenote) => singlenote);
-    singleNoteStateSaved =
-        Provider.of<SingleNoteOperation>(context, listen: false).getSingleNote;
-
-    String titleData = context.select<SingleNoteOperation, String>(
-      (singlenoteoperation) {
-        SingleNote singlenoteop = singlenoteoperation.getSingleNote;
-        if (singlenoteop.title.isNotEmpty) {
-          return singlenoteop.title;
-        } else {
-          return '';
-        }
-      },
-    );
-
-    String deskripsiData = context.select<SingleNoteOperation, String>(
-      (singlenoteoperation) {
-        SingleNote singlenoteop = singlenoteoperation.getSingleNote;
-        return singlenoteop.description;
-      },
-    );
-
-    _textTitleEditingController.clear();
-    _textTitleEditingController.text = titleData;
-    _textDescEditingController.text = deskripsiData;
+    // Ambil data state note
+    getNoteData(context);
 
     return Scaffold(
       backgroundColor: Colors.white,

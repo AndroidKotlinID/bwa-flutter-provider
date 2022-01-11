@@ -120,9 +120,13 @@ class _AddScreenPageState extends State<AddScreenPage> {
                           onEditingComplete: () {
                             // https://stackoverflow.com/questions/44991968/how-can-i-dismiss-the-on-screen-keyboard
                             // https://flutterigniter.com/dismiss-keyboard-form-lose-focus/
-                            if (FocusScope.of(context).hasPrimaryFocus) {
-                              FocusScope.of(context).unfocus();
-                            }
+                            // https://stackoverflow.com/questions/51652897/how-to-hide-soft-input-keyboard-on-flutter-after-clicking-outside-textfield-anyw
+                            print('Proses unfokus keyboard 1');
+                            FocusScope.of(context).unfocus();
+                            // if (FocusScope.of(context).hasPrimaryFocus) {
+                            //   FocusScope.of(context).unfocus();
+                            //   print('Proses unfokus keyboard 2');
+                            // }
                           },
                           keyboardType: TextInputType.text,
                           maxLength: 32,

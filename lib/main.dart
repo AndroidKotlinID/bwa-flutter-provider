@@ -8,6 +8,7 @@ void main() {
   // runApp(const MyApp());
   // runApp(const HomeScreen());
   runApp(
+    // Multi provider harus berada di stack paling atas
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => NotesOperation()),
