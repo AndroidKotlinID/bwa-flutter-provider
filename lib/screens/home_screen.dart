@@ -1,4 +1,3 @@
-import 'package:bwanoteprovider/models/singlenote_operation.dart';
 import 'package:bwanoteprovider/screens/addnote_screen.dart';
 import 'package:bwanoteprovider/screens/notes_card.dart';
 import 'package:bwanoteprovider/screens/singlenote_screen.dart';
