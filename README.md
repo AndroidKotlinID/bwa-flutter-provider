@@ -1,6 +1,6 @@
 # BWA Note Provider
 
-Latihan menggunakan state management Provider di Flutter. Latihan dari [BWA Flutter](https://buildwithangga.com/tips/flutter-tutorial-simple-notes-app-using-provider)
+Latihan menggunakan state management Provider di Flutter. Latihan dari [BWA Flutter](https://buildwithangga.com/tips/flutter-tutorial-simple-notes-app-using-provider). Menggunakan state management Provider untuk menyimpan catatan sementara.
 
 ## Getting Started
 
