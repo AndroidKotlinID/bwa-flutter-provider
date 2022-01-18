@@ -196,9 +196,32 @@ class _AddScreenPageState extends State<AddScreenPage> {
             ),
             const SizedBox(
               height: 18,
+            ),
+            Center(
+              // https://medium.com/flutter-community/why-every-flutter-dev-should-care-about-buildcontext-8a3ad5305080
+              child: Builder(
+                builder: (buildercontext) {
+                  return const SnackBarContent();
+                },
+              ),
             )
           ],
         ),
+      ),
+    );
+  }
+}
+
+class SnackBarContent extends StatelessWidget {
+  const SnackBarContent({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 200,
+      color: Colors.amber,
+      child: const Center(
+        child: Text("Do you see me?"),
       ),
     );
   }
